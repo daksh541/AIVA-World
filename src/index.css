@@ -1,0 +1,214 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Design System - Dark Mode (Default) */
+    --background: 10 14 27; /* #0a0e27 - Deep Dark Background */
+    --foreground: 229 231 235; /* #e5e7eb - Soft White */
+    --card: 26 26 46; /* #1a1a2e - Card Background */
+    --card-foreground: 229 231 235;
+    --popover: 26 26 46;
+    --popover-foreground: 229 231 235;
+    --primary: 0 212 255; /* #00d4ff - Neon Blue */
+    --primary-foreground: 10 14 27;
+    --secondary: 181 55 255; /* #b537ff - Neon Purple */
+    --secondary-foreground: 229 231 235;
+    --muted: 26 26 46;
+    --muted-foreground: 156 163 175; /* #9ca3af - Light Gray */
+    --accent: 255 46 151; /* #ff2e97 - Neon Pink */
+    --accent-foreground: 229 231 235;
+    --destructive: 239 68 68; /* #ef4444 - Red */
+    --destructive-foreground: 229 231 235;
+    --border: 55 65 81; /* #374151 - Border Gray */
+    --input: 55 65 81;
+    --ring: 0 212 255;
+    --radius: 0.5rem;
+    
+    /* Neon Accent Colors */
+    --neon-blue: 0 212 255;
+    --neon-purple: 181 55 255;
+    --neon-pink: 255 46 151;
+    --neon-cyan: 0 255 249;
+    --neon-orange: 255 165 0;
+    
+    /* Animation Timing */
+    --animation-fast: 200ms;
+    --animation-standard: 400ms;
+    --animation-slow: 600ms;
+    
+    /* Spring Animation */
+    --spring-tension: 300;
+    --spring-friction: 30;
+    --spring-mass: 1;
+  }
+  
+  [data-theme="light"] {
+    --background: 249 250 251; /* #f9fafb - Light Background */
+    --foreground: 17 24 39; /* #111827 - Dark Text */
+    --card: 255 255 255; /* White */
+    --card-foreground: 17 24 39;
+    --popover: 255 255 255;
+    --popover-foreground: 17 24 39;
+    --primary: 0 212 255;
+    --primary-foreground: 255 255 255;
+    --secondary: 181 55 255;
+    --secondary-foreground: 255 255 255;
+    --muted: 243 244 246; /* #f3f4f6 */
+    --muted-foreground: 107 114 128; /* #6b7280 */
+    --accent: 255 46 151;
+    --accent-foreground: 255 255 255;
+    --destructive: 239 68 68;
+    --destructive-foreground: 255 255 255;
+    --border: 229 231 235; /* #e5e7eb */
+    --input: 229 231 235;
+    --ring: 0 212 255;
+  }
+  
+  [data-theme="high-contrast"] {
+    --background: 0 0 0; /* Pure Black */
+    --foreground: 255 255 255; /* Pure White */
+    --card: 17 17 17; /* Near Black */
+    --card-foreground: 255 255 255;
+    --popover: 17 17 17;
+    --popover-foreground: 255 255 255;
+    --primary: 0 255 255; /* Bright Cyan */
+    --primary-foreground: 0 0 0;
+    --secondary: 255 0 255; /* Bright Magenta */
+    --secondary-foreground: 255 255 255;
+    --muted: 34 34 34;
+    --muted-foreground: 200 200 200;
+    --accent: 255 255 0; /* Bright Yellow */
+    --accent-foreground: 0 0 0;
+    --destructive: 255 0 0; /* Bright Red */
+    --destructive-foreground: 255 255 255;
+    --border: 255 255 255;
+    --input: 255 255 255;
+    --ring: 0 255 255;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    transition: background-color var(--animation-standard) ease, color var(--animation-standard) ease;
+  }
+  
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-neon-blue via-neon-purple to-neon-pink bg-clip-text text-transparent;
+  }
+  
+  .glow-text {
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.8),
+                 0 0 20px rgba(0, 212, 255, 0.6),
+                 0 0 30px rgba(0, 212, 255, 0.4);
+  }
+  
+  .neon-border {
+    border: 1px solid rgba(0, 212, 255, 0.5);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3),
+                inset 0 0 10px rgba(0, 212, 255, 0.1);
+  }
+  
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Button State Utilities */
+  .btn-hover {
+    transform: scale(1.02);
+    transition: transform var(--animation-fast) cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  
+  .btn-active {
+    transform: scale(0.98);
+  }
+  
+  .btn-focus {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+  
+  /* GPU-accelerated animations */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform, opacity;
+  }
+  
+  /* Touch target minimum size */
+  .touch-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  @media (min-width: 768px) {
+    .touch-target {
+      min-width: 48px;
+      min-height: 48px;
+    }
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00d4ff, #b537ff);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #00fff9, #ff2e97);
+}
+
+/* Focus visible for keyboard navigation */
+:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skip to main content link for accessibility */
+.skip-to-main {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  padding: 8px 16px;
+  z-index: 100;
+  text-decoration: none;
+  border-radius: 0 0 4px 0;
+}
+
+.skip-to-main:focus {
+  top: 0;
+}
